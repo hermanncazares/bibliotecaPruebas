@@ -1,4 +1,3 @@
-
 package org.negocio;
 
 import excepciones.PersistenciaException;
@@ -9,7 +8,6 @@ import org.modelo.Copia;
 import org.modelo.Libro;
 import org.modelo.Prestamo;
 
-
 public class LibroDAO {
 
     Control control;
@@ -19,17 +17,20 @@ public class LibroDAO {
     }
 
     // LO ESENCIAL: AGREGAR MODIFICAR ELIMINAR Y VER
-    public boolean agregarLibro(Libro libro) throws PersistenciaException{
-        try {
-            control.agregarLibro(libro);
-            return true;
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(LibroDAO.class.getName()).log(Level.SEVERE, null, ex);
+    public boolean agregarLibro(Libro libro) throws PersistenciaException {
+            try {
+                control.agregarLibro(libro);
+                return true;
+
+            } catch (PersistenciaException ex) {
+                Logger.getLogger(LibroDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+            return false;
         }
-        return false;
+
     }
 
-    public boolean editarLibro(Libro libro) throws PersistenciaException{
+    public boolean editarLibro(Libro libro) throws PersistenciaException {
         try {
             control.editarLibro(libro);
             System.out.println(control.obtenerLibros());
@@ -89,7 +90,5 @@ public class LibroDAO {
         }
         return null;
     }
-
-
 
 }

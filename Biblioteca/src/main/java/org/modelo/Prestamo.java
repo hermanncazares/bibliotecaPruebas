@@ -1,19 +1,18 @@
 package org.modelo;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Prestamo {
-    public static int idPrestamo = 0;
-//    private int idPrestamo;
+//    public static int idPrestamo = 0;
+    private int idPrestamo;
     private Usuario usuario;
     private List<Copia> listaCopias;
     private Date fechaInicio;
     private Date fechaFin;
     
     public Prestamo(Date fechaInicio, Date fechaFin, Usuario usuario, List<Copia> copias) {
-        this.idPrestamo++;
+//        this.idPrestamo++;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.usuario = usuario;
@@ -29,9 +28,9 @@ public class Prestamo {
     }
     
 
-    public static int getIdPrestamo() {
-        return idPrestamo;
-    }
+//    public static int getIdPrestamo() {
+//        return idPrestamo;
+//    }
 
   
 
@@ -76,10 +75,22 @@ public class Prestamo {
 //        return "xd";
 //    }
 
+    public int getIdPrestamo() {
+        return idPrestamo;
+    }
+
+    public void setIdPrestamo(int idPrestamo) {
+        this.idPrestamo = idPrestamo;
+    }
+
     @Override
     public String toString() {
-        return "Prestamo:" + " Usuario:" + usuario.getNombre() + ", listaCopias:" + listaCopias.size() + ", fechaInicio=" + fechaInicio.toString() + ", fechaFin=" + fechaFin.toString() + '}';
+        return "Prestamo{" + "idPrestamo=" + idPrestamo + ", usuario=" + usuario + ", listaCopias=" + listaCopias + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + '}';
     }
+
+   
+
+   
 
 
 }
