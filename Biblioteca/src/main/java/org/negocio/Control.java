@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import org.modelo.*;
 
 public class Control {
@@ -260,5 +261,16 @@ public class Control {
         int indice = random.nextInt(TipoUsuario.values().length);
         return TipoUsuario.values()[indice];
 
+    }
+    
+    public void registrarUsuario(Usuario usuario){
+        for (int i = 0; i < listaUsuarios.size(); i++) {
+            if(listaUsuarios.get(i).getUsuario().equals(usuario.getUsuario())){
+                JOptionPane.showMessageDialog(null, "Usuario repetido.");
+                return;
+            }
+        }
+        listaUsuarios.add(usuario);
+        JOptionPane.showMessageDialog(null, "Usuario guardado.");
     }
 }

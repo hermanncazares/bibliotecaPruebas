@@ -1,6 +1,7 @@
 package org.modelo;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Usuario {
 
@@ -30,6 +31,12 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.id = id;
     }
+
+    public Usuario(String usuario, String contraseña) {
+        this.contraseña = contraseña;
+        this.usuario = usuario;
+    }
+    
 
     public Usuario() {
     }

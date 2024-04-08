@@ -1,5 +1,6 @@
 package org.vista;
 
+import javax.swing.JOptionPane;
 import org.modelo.TipoUsuario;
 import org.modelo.Usuario;
 import org.negocio.Control;
@@ -15,7 +16,7 @@ public class frmIniciarSesion extends javax.swing.JFrame {
     public frmIniciarSesion() {
         initComponents();
         control = Control.getInstance();
-        control.crearUsuarios(); // creamos usuarios random para pruebas PARA NO TENER QUE HACER EL TXT CON MAS USUARIOS
+//        control.crearUsuarios(); // creamos usuarios random para pruebas PARA NO TENER QUE HACER EL TXT CON MAS USUARIOS
         System.out.println(control.obtenerUsuarios());
     }
 
@@ -24,11 +25,12 @@ public class frmIniciarSesion extends javax.swing.JFrame {
     private void initComponents() {
 
         btnInicio = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
+        txtContraseña = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -40,35 +42,49 @@ public class frmIniciarSesion extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("ID:");
+        jLabel1.setText("Usuario:");
 
         jLabel2.setText("Contraseña");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel3.setText("Iniciar sesion");
 
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 74, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(11, 11, 11))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInicio)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(110, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(76, 76, 76))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(11, 11, 11))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(btnRegistrar)))))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,15 +93,17 @@ public class frmIniciarSesion extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(53, 53, 53)
+                .addGap(35, 35, 35)
                 .addComponent(btnInicio)
-                .addGap(75, 75, 75))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRegistrar)
+                .addGap(58, 58, 58))
         );
 
         pack();
@@ -93,12 +111,45 @@ public class frmIniciarSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-        dlgMenuPrincipal dlg = new dlgMenuPrincipal(user);
-        dlg.setVisible(true);
-        this.dispose();
+        
+        autenticarUsuario();
+        
 
     }//GEN-LAST:event_btnInicioActionPerformed
 
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        frmRegistroNuevoUsuario frmRegistro = new frmRegistroNuevoUsuario();
+        frmRegistro.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    public void autenticarUsuario(){
+        
+        String txtContraseña = this.txtUsuario.getText();
+        String txtUsuario = this.txtContraseña.getText();
+        
+        Usuario usuario = new Usuario(txtUsuario, txtContraseña);
+        
+        //FALTA LA AUTENTICACION.
+        for (int i = 0; i < control.obtenerUsuarios().size(); i++) {
+
+            System.out.println("Usuario= "+control.obtenerUsuarios().get(i).getUsuario()+ "Contraseña= "+control.obtenerUsuarios().get(i).getContraseña());
+            System.out.println("Usuario2= "+usuario.getUsuario()+ "Contraseña2= "+usuario.getContraseña());
+            System.out.println("BOOLEAN: "+control.obtenerUsuarios().get(i).getUsuario() == txtUsuario);
+            
+            if(control.obtenerUsuarios().get(i).getUsuario().equals(txtUsuario) && control.obtenerUsuarios().get(i).getContraseña().equals(this.txtContraseña.getText())){
+                System.out.println("ENTRE");
+                JOptionPane.showMessageDialog(null, "Usuario Autorizado.");
+                dlgMenuPrincipal dlg = new dlgMenuPrincipal(control.obtenerUsuarios().get(i));
+                dlg.setVisible(true);
+                this.dispose();
+                return;
+                
+            }
+        }
+        JOptionPane.showMessageDialog(null, "No se encontro el usuario.");
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -134,10 +185,11 @@ public class frmIniciarSesion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtContraseña;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
