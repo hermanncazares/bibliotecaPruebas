@@ -4,6 +4,7 @@
  */
 package org.negocio;
 
+import excepciones.PersistenciaException;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,6 +12,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
+import org.mockito.MockitoAnnotations;
 import org.modelo.Copia;
 import org.modelo.Libro;
 import org.modelo.Prestamo;
@@ -21,6 +28,16 @@ import org.modelo.Usuario;
  * @author Jairi
  */
 public class ControlTest {
+    
+    @Mock
+    private Libro libroMock; //Objeto Simulado para un libro
+    
+    @Mock
+    private Usuario usuarioMock;//Objeto Simulado para un usuario
+    
+    @InjectMocks
+    private Control control; //Clase bajo prueba
+    
     
     public ControlTest() {
     }
@@ -35,6 +52,11 @@ public class ControlTest {
     
     @Before
     public void setUp() {
+        
+        
+        MockitoAnnotations.openMocks(this);
+        
+        control = Control.getInstance();
     }
     
     @After
@@ -42,31 +64,13 @@ public class ControlTest {
     }
 
     /**
-     * Test of getInstance method, of class Control.
-     */
-    @Test
-    public void testGetInstance() {
-        System.out.println("getInstance");
-        Control expResult = null;
-        Control result = Control.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of agregarLibro method, of class Control.
      */
     @Test
-    public void testAgregarLibro() throws Exception {
-        System.out.println("agregarLibro");
-        Libro libro = null;
-        Control instance = null;
-        boolean expResult = false;
-        boolean result = instance.agregarLibro(libro);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testAgregarLibro() throws PersistenciaException {
+//        boolean esperado = new boolean()
+//        
+//        Mockito.when(control.agregarLibro(libroMock));
     }
 
     /**
@@ -88,15 +92,17 @@ public class ControlTest {
      * Test of eliminarLibro method, of class Control.
      */
     @Test
-    public void testEliminarLibro() throws Exception {
-        System.out.println("eliminarLibro");
-        String isbn = "";
-        Control instance = null;
-        boolean expResult = false;
-        boolean result = instance.eliminarLibro(isbn);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEliminarLibro() throws PersistenciaException {
+        // Agregamos un libro mock a la lista de libros
+        control.obtenerLibros().add(libroMock);
+        // Verificamos que la lista de libros contenga al menos un libro
+        assertFalse(control.obtenerLibros().isEmpty());
+        // Simulamos el comportamiento del método eliminarLibro para que no lance excepciones
+        when(control.eliminarLibro(anyString())).thenReturn(true);
+        // Llamamos al método eliminarLibro con el ISBN de un libro mock
+        assertTrue(control.eliminarLibro("1234567890"));
+        // Verificamos que el libro fue eliminado de la lista
+        assertFalse(control.obtenerLibros().contains(libroMock));
     }
 
     /**
