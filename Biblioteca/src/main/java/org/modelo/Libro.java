@@ -21,10 +21,31 @@ public class Libro {
     public int getIDLibro(){
         return idLibro;
     }
-    
-    public Libro(String nombre) {
-        this.nombreAutor = nombreAutor;
+
+    public static int getIdLibro() {
+        return idLibro;
     }
+
+    public static void setIdLibro(int idLibro) {
+        Libro.idLibro = idLibro;
+    }
+
+    public int getNumCopias() {
+        return numCopias;
+    }
+
+    public void setNumCopias(int numCopias) {
+        this.numCopias = numCopias;
+    }
+
+    public List<Copia> getListaCopias() {
+        return listaCopias;
+    }
+
+    public void setListaCopias(List<Copia> listaCopias) {
+        this.listaCopias = listaCopias;
+    }
+    
 
     public String getNombreAutor() {
         return nombreAutor;
@@ -56,6 +77,11 @@ public class Libro {
 
     public void setCopia(Copia copia) {
         listaCopias.add(copia);
+    }
+
+    @Override
+    public String toString() {
+        return "Libro{" + "nombreAutor=" + nombreAutor + ", titulo=" + titulo + ", ISBN=" + ISBN + ", numCopias=" + numCopias + ", listaCopias=" + listaCopias + '}';
     }
     
     

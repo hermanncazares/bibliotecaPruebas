@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Usuario {
 
-    private static int id = 0;
+//    public static int id = 0;
+    private int id;
     private String nombre;
     private String apellido;
     private String contraseña;
@@ -13,12 +14,30 @@ public class Usuario {
     private TipoUsuario tipoUsuario;
 
     public Usuario(String nombre, String apellido, TipoUsuario tipoUsuario, String contraseña, String usuario) {
-        this.id++;
+//        this.id++;
         this.nombre = nombre;
         this.apellido = apellido;
         this.tipoUsuario = tipoUsuario;
         this.contraseña = contraseña;
         this.usuario = usuario;
+    }
+
+    public Usuario(int id, String nombre, String apellido, TipoUsuario tipoUsuario, String contraseña, String usuario) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.contraseña = contraseña;
+        this.usuario = usuario;
+        this.tipoUsuario = tipoUsuario;
+        this.id = id;
+    }
+
+    public Usuario() {
+    }
+//    public static int getId(){
+//        return id;
+//    }
+    public int getId(){
+        return id;
     }
 
     public String getNombre() {
@@ -33,6 +52,10 @@ public class Usuario {
         return apellido;
     }
 
+//    public int getId() {
+//        return id;
+//    }
+
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
@@ -44,7 +67,7 @@ public class Usuario {
     public void setTipoUsuario(TipoUsuario tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+
     public String getContraseña() {
         return contraseña;
     }
@@ -68,6 +91,10 @@ public class Usuario {
     public void setPrestamos(Prestamo prestamo) {
         this.prestamos.add(prestamo);
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Id: " + id + " ,Usuario{" + "nombre=" + nombre + ", apellido=" + apellido + ", contrase\u00f1a=" + contraseña + ", usuario=" + usuario + ", tipoUsuario=" + tipoUsuario + '}';
+    }
+
 }

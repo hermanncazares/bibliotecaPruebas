@@ -54,7 +54,7 @@ public class Copia {
 
     @Override
     public String toString() {
-        return "Copia:" + "libro:" + libro.getTitulo()+ ", Estado de Copia:" + estadoCopia + ", Prestamo:" + prestamo.getUsuario().getNombre();
+        return "Copia:" + "libro:" + libro.getTitulo()+ ", Estado de Copia:" + estadoCopia; //+ ", Prestamo:" + prestamo.getUsuario().getNombre();
     }
     
     

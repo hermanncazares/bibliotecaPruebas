@@ -5,7 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Prestamo {
-    private static int idPrestamo = 0;
+    public static int idPrestamo = 0;
+//    private int idPrestamo;
     private Usuario usuario;
     private List<Copia> listaCopias;
     private Date fechaInicio;
@@ -19,13 +20,20 @@ public class Prestamo {
         this.listaCopias = copias;
     }
 
+    public Prestamo(int idPrestamo, Usuario usuario, List<Copia> listaCopias, Date fechaInicio, Date fechaFin) {
+        this.idPrestamo = idPrestamo;
+        this.usuario = usuario;
+        this.listaCopias = listaCopias;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+    }
+    
+
     public static int getIdPrestamo() {
         return idPrestamo;
     }
 
-    public static void setIdPrestamo(int idPrestamo) {
-        Prestamo.idPrestamo = idPrestamo;
-    }
+  
 
     public Usuario getUsuario() {
         return usuario;
