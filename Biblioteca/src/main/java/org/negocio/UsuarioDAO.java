@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import org.modelo.Usuario;
 
 
-public class UsuarioDAO {
+public class UsuarioDAO implements IUsuario{
 
     Control control;
 
@@ -16,6 +16,7 @@ public class UsuarioDAO {
 
     }
 
+    @Override
     public Usuario buscarUsuarioPorId(int id) {
 
         try {

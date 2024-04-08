@@ -1,55 +1,41 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
-// */
-//package org.negocio;
-//
-//import org.junit.After;
-//import org.junit.AfterClass;
-//import org.junit.Before;
-//import org.junit.BeforeClass;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
-//import org.modelo.Usuario;
-//
-///**
-// *
-// * @author Jairi
-// */
-//public class UsuarioDAOTest {
-//    
-//    public UsuarioDAOTest() {
-//    }
-//    
-//    @BeforeClass
-//    public static void setUpClass() {
-//    }
-//    
-//    @AfterClass
-//    public static void tearDownClass() {
-//    }
-//    
-//    @Before
-//    public void setUp() {
-//    }
-//    
-//    @After
-//    public void tearDown() {
-//    }
-//
-//    /**
-//     * Test of buscarUsuarioPorId method, of class UsuarioDAO.
-//     */
-//    @Test
-//    public void testBuscarUsuarioPorId() {
-//        System.out.println("buscarUsuarioPorId");
-//        int id = 0;
-//        UsuarioDAO instance = new UsuarioDAO();
-//        Usuario expResult = null;
-//        Usuario result = instance.buscarUsuarioPorId(id);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//    
-//}
+package org.negocio;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import excepciones.PersistenciaException;
+import org.modelo.Usuario;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.modelo.TipoUsuario;
+
+@ExtendWith(MockitoExtension.class)
+public class UsuarioDAOTest {
+
+    @Mock
+    private Control controlMock;
+    private UsuarioDAO usuarioDAO;
+
+    @BeforeEach
+    public void setUp() {
+        usuarioDAO = new UsuarioDAO();
+        usuarioDAO.control = controlMock;
+    }
+
+    @Test
+    public void testBuscarUsuarioPorId() throws PersistenciaException {
+        // Configuración del caso de prueba
+        Usuario usuarioEsperado = new Usuario(1, "Nombre", "Apellido", TipoUsuario.BIBLIOTECARIO, "contraseña", "usuario");
+        when(controlMock.buscarUsuarioPorId(1)).thenReturn(usuarioEsperado);
+
+        // Ejecución del método a probar
+        Usuario usuarioObtenido = usuarioDAO.buscarUsuarioPorId(1);
+
+        // Verificación
+        assertEquals(usuarioEsperado, usuarioObtenido);
+        verify(controlMock, times(1)).buscarUsuarioPorId(1); // Verificamos que el método de control se haya llamado exactamente una vez con el argumento 1
+    }
+}
