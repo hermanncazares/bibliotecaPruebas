@@ -32,7 +32,7 @@ public class PrestamoDAOTest {
     }
 
     @Test
-    public void testRegistrarPrestamoExitoso() throws PersistenciaException {
+    public void testRegistrarPrestamo() throws PersistenciaException {
         // Configuración del caso de prueba
         Usuario usuario = new Usuario("nombre", "apellido", TipoUsuario.BIBLIOTECARIO, "contraseña", "usuario");
         Libro libro = new Libro("Autor", "Título", "ISBN123", 5);
