@@ -2,9 +2,12 @@ package org.vista;
 
 import com.toedter.calendar.JDateChooser;
 import excepciones.PersistenciaException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.*;
 import javax.swing.JOptionPane;
+import org.modelo.Copia;
 import org.modelo.EstadoCopia;
 import org.modelo.Prestamo;
 import org.modelo.Usuario;
@@ -16,7 +19,7 @@ import org.negocio.UsuarioDAO;
 public class frmPrestamo extends javax.swing.JFrame {
 
 //    private Prestamo prestamo;
-//    private List<Copia> listaCopias;
+    private List<Copia> listaCopias;
     private final PrestamoDAO prestamoDao;
     private final UsuarioDAO usuarioDao;
     private final LibroDAO libroDao;
@@ -28,10 +31,10 @@ public class frmPrestamo extends javax.swing.JFrame {
 
     public frmPrestamo(Control control, Usuario usuario, LibroDAO libroDao, PrestamoDAO prestamoDao, UsuarioDAO usuarioDao) {
         initComponents();
-        this.usuarioDao=usuarioDao;
+        this.usuarioDao = usuarioDao;
         this.prestamoDao = prestamoDao;
         this.libroDao = libroDao;
-//        listaCopias = new ArrayList<>();
+        listaCopias = new ArrayList<>();
         dateChooser1 = new JDateChooser();
         dateChooser1.setDate(new Date());
         getContentPane().add(dateChooser1);
@@ -375,28 +378,32 @@ public class frmPrestamo extends javax.swing.JFrame {
                     libro.setNumCopias(libro.getNumCopias() - Integer.parseInt(txtCantidad.getText()));
                     for (int i = 0; i < Integer.parseInt(txtCantidad.getText()); i++) {
                         org.modelo.Copia copia = new org.modelo.Copia(EstadoCopia.PRESTADO, libro);
-//                    copia.setPrestamo(prestamo);
-                        control.obtenerCopias().add(copia);
+                        listaCopias.add(copia);
                     }
 
                     libroDao.editarLibro(libro);
                     totalLibrosAgregados += Integer.parseInt(txtCantidad.getText());
                     labelLibros.setText(String.valueOf(totalLibrosAgregados));
-                    if (JOptionPane.showConfirmDialog(null, "El libro se solicito con exito, deseas agregar otro libro?") == 0) {
-                        ocultar();
-                    } else {
-                        org.modelo.Prestamo prestamo = new Prestamo(dateChooser1.getDate(), dateChooser2.getDate(), usuarioDao.buscarUsuarioPorId(Integer.parseInt(txtIdAlumno.getText())), control.obtenerCopias());
+//                    int respuesta = JOptionPane.showConfirmDialog(null, "El libro se solicito con exito, deseas agregar otro libro?");
+//                    if (respuesta == 0) {
+//                        ocultar();
+//                    } else if (respuesta == 2) {
+//                        libro.setNumCopias(libro.getNumCopias() + Integer.parseInt(txtCantidad.getText()));
+//                        this.dispose();
+//                    } 
+//                    else {
+                        org.modelo.Prestamo prestamo = new Prestamo(dateChooser1.getDate(), dateChooser2.getDate(), usuarioDao.buscarUsuarioPorId(Integer.parseInt(txtIdAlumno.getText())), listaCopias);
+                        prestamo.setIdPrestamo(control.obtenerPrestamos().size() + 1);
                         prestamoDao.registrarPrestamo(prestamo);
-                        System.out.println("Prestamo: " + prestamo);
-                        System.out.println("\nCopias: " + control.obtenerCopias());
                         JOptionPane.showMessageDialog(null, "Se agregaron " + totalLibrosAgregados + " libros al usuario " + usuarioDao.buscarUsuarioPorId(Integer.parseInt(txtIdAlumno.getText())).getNombre());
-
+                        JOptionPane.showMessageDialog(null, "Id del prestamo: " + prestamo.getIdPrestamo());
                         this.dispose();
-                    }
+//                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Solo hay " + libroDao.verLibroPorIsbn(txtIsbn.getText()).getNumCopias() + " copias del libro");
                     ocultar();
                 }
+
             } catch (PersistenciaException ex) {
                 Logger.getLogger(frmPrestamo.class.getName()).log(Level.SEVERE, null, ex);
             }

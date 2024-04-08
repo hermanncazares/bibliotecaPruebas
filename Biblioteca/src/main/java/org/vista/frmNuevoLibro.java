@@ -198,11 +198,18 @@ public class frmNuevoLibro extends javax.swing.JFrame {
                 txtNumCopias.setText("");
             } else {
                 Libro libro = new Libro(txtAutor.getText(), txtTitulo.getText(), txtIsbn.getText(), Integer.parseInt(txtNumCopias.getText()));
+
                 try {
-                    libroDao.agregarLibro(libro);
-                    JOptionPane.showMessageDialog(null, "El libro ha sido agregado con éxito");
-                    System.out.println(control.obtenerLibros());
-                    this.dispose();
+                    if (control.verLibroPorIsbn(libro.getISBN()) != null) {
+                        JOptionPane.showMessageDialog(null, "El ISBN ya esta registrado");
+                        txtIsbn.setText("");
+                    } else {
+                        libroDao.agregarLibro(libro);
+                        JOptionPane.showMessageDialog(null, "El libro ha sido agregado con éxito");
+                        System.out.println(control.obtenerLibros());
+                        this.dispose();
+                    }
+
                 } catch (PersistenciaException ex) {
                     Logger.getLogger(frmNuevoLibro.class.getName()).log(Level.SEVERE, null, ex);
                 }

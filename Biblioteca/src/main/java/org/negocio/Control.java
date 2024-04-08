@@ -175,15 +175,14 @@ public class Control {
         System.out.println(listaPrestamos);
         try {
             for (Prestamo p : listaPrestamos) {
-                if (p.idPrestamo == idPrestamo) {
-                    System.out.println(p.idPrestamo);
+                if (p.getIdPrestamo() == idPrestamo) {
                     return p;
                 }
             }
-            throw new PersistenciaException("El usuario no existe, o su id es incorrecto");
+            throw new PersistenciaException("El prestamo no existe, o su id es incorrecto");
 
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener el usuario, intente de nuevo" + e);
+            throw new PersistenciaException("Error al obtener el prestamo, intente de nuevo" + e);
 
         }
     }

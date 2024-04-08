@@ -2,8 +2,6 @@ package org.vista;
 
 import excepciones.PersistenciaException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.modelo.EstadoCopia;
 import org.modelo.Usuario;
@@ -42,6 +40,7 @@ public class frmDevolucion extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -119,6 +118,7 @@ public class frmDevolucion extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresar2ActionPerformed
@@ -138,35 +138,37 @@ public class frmDevolucion extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int id = Integer.parseInt(txtIdPrestamo.getText());
         try {
-            System.out.println("prestamos:" + control.obtenerPrestamos());
-            org.modelo.Prestamo prestamo = control.verPrestamo(Integer.parseInt(txtIdPrestamo.getText()));
-            if ( control.verPrestamo(Integer.parseInt(txtIdPrestamo.getText())) != null) {
-
-                if (!prestamo.getFechaFin().before(new Date())) {
-                    JOptionPane.showMessageDialog(null, """
-                                                        Entrega de libro tardia, porfavor paga el excedente en mostrador 
-                                                        Fecha Limite: """+ prestamo.getFechaFin() + "\nFecha Actual: " + new Date());
-
-                }
-                System.out.println("copias" + prestamo.getListaCopias() + "\n");
-
-                for (org.modelo.Copia c : prestamo.getListaCopias()) {
-                    int ct = 0;
-                    c.setEstadoCopia(EstadoCopia.DISPONIBLE);
-                    c.getLibro().setNumCopias(ct++);
-                }
-                System.out.println("copias" + prestamo.getListaCopias() + "\n");
-                System.out.println("prestamos:" + control.obtenerPrestamos() + "\n");
-
-                JOptionPane.showMessageDialog(null, "El prestamo ha sido liberado y las copias de los libros estan disponibles nuevamente");
-                this.dispose();
+            if (control.verPrestamo(id).getListaCopias().get(control.verPrestamo(id).getListaCopias().size() - 1).getEstadoCopia() == EstadoCopia.DISPONIBLE) {
+                JOptionPane.showMessageDialog(null, "Este prestamo ya esta liberado");
             } else {
-                JOptionPane.showMessageDialog(null, "El prestamo no fue registrado o es incorrecto");
-                txtIdPrestamo.setText("");
+                org.modelo.Prestamo prestamo = control.verPrestamo(Integer.parseInt(txtIdPrestamo.getText()));
+                if (control.verPrestamo(Integer.parseInt(txtIdPrestamo.getText())) != null) {
+
+                    if (!prestamo.getFechaFin().before(new Date())) {
+                        JOptionPane.showMessageDialog(null, """
+                                                        Entrega de libro tardia, porfavor paga el excedente en mostrador 
+                                                        Fecha Limite: """ + prestamo.getFechaFin() + "\nFecha Actual: " + new Date());
+
+                    }
+                    for (int i = 0; i < prestamo.getListaCopias().size(); i++) {
+                        prestamo.getListaCopias().get(i).setEstadoCopia(EstadoCopia.DISPONIBLE);
+                        prestamo.getListaCopias().get(i).getLibro().setNumCopias(prestamo.getListaCopias().get(i).getLibro().getNumCopias() + 1);
+
+                    }
+
+                    JOptionPane.showMessageDialog(null, "El prestamo ha sido liberado y las copias de los libros estan disponibles nuevamente");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "El prestamo no fue registrado o es incorrecto");
+                    txtIdPrestamo.setText("");
+                }
             }
+
         } catch (PersistenciaException ex) {
-            Logger.getLogger(frmDevolucion.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "El prestamo no fue registrado o es incorrecto");
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

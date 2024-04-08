@@ -16,7 +16,7 @@ public class frmIniciarSesion extends javax.swing.JFrame {
         initComponents();
         control = Control.getInstance();
         control.crearUsuarios(); // creamos usuarios random para pruebas PARA NO TENER QUE HACER EL TXT CON MAS USUARIOS
-
+        System.out.println(control.obtenerUsuarios());
     }
 
     @SuppressWarnings("unchecked")
